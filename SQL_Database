@@ -1,0 +1,76 @@
+SQL
+
+1. Basic search using LIKE
+SELECT * FROM Test
+WHERE UserId = 'Email'
+AND services like '%vpn%';
+
+
+2. Counting Data
+SELECT IPAddress, COUNT(*) as Count
+FROM Test
+WHERE UserId = 'Email'
+GROUP BY IPAddress
+ORDER BY count;
+
+
+
+3. Creating one table from 3 tables of UAL data
+CREATE TABLE AdExEnriched AS
+SELECT	AD.CreationTime,
+		AD.ClientIp AS IPAddress,
+		AD.Workload,
+		AD.Operation,
+		AD.ResultStatus,
+		AD.UserId,
+		AD.LogonError,
+		AD.ErrorNumber, 
+		AD.ExtendedProperties, 
+		AD.ApplicationId,
+		IP."results.data.as.organization" AS isp,
+		IP."results.data.location.country" AS countryCode, 
+		IP."results.data.services" AS services, 
+		IP."results.data.risks" As risks, 
+		IP."results.data.client.behaviors" AS behaviors,
+		NULL AS OperationProperties,
+		NULL AS ClientInfoString,
+		NULL AS ResultStatus,
+		NULL AS MailboxOwnerUPN,
+		NULL AS Folder, 
+		NULL AS Folders,
+		NULL AS Item, 
+		NULL AS AffectedItems, 
+		NULL AS SessionId
+FROM AAD as AD
+LEFT JOIN IPEnrichment as IP
+ON AD.ClientIp = IP.ip
+ 
+UNION
+ 
+SELECT 	EX.CreationTime,
+		EX.ClientIPAddress, 
+		EX.Workload, 
+		EX.Operation, 
+		EX.ResultStatus, 
+		EX.UserId,
+		NULL AS LogonError,
+		NULL AS ErrorNumber, 
+		NULL AS ExtendedProperties, 
+		EX.AppId,
+		IP."results.data.as.organization" AS isp,
+		IP."results.data.location.country" AS countryCode, 
+		IP."results.data.services" AS services, 
+		IP."results.data.risks" As risks, 
+		IP."results.data.client.behaviors" AS behaviors,
+		EX.OperationProperties,
+		EX.ClientInfoString,
+		EX.ResultStatus,
+		EX.MailboxOwnerUPN,
+		EX.Folder, 
+		EX.Folders,
+		EX.Item, 
+		EX.AffectedItems, 
+		EX.SessionId
+FROM Exchange AS EX
+LEFT JOIN IPEnrichment AS IP
+ON EX.ClientIPAddress = IP.ip
