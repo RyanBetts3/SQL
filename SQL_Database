@@ -1,5 +1,42 @@
 SQL
 
+Data Retrieval (SELECT):
+
+Retrieves data from tables.
+Basic syntax: SELECT column1, column2, ... FROM table_name;
+Retrieve all columns: SELECT * FROM table_name;
+Alias columns: SELECT column1 AS alias1, column2 AS alias2, ... FROM table_name;
+Filtering Data (WHERE):
+
+Filters rows based on conditions.
+Syntax: SELECT ... FROM table_name WHERE condition;
+Conditions: Use comparison operators (=, <>, <, >, <=, >=) and logical operators (AND, OR, NOT).
+Ordering Data (ORDER BY):
+
+Sorts results by a specific column.
+Syntax: SELECT ... FROM table_name ORDER BY column_name [ASC | DESC];
+ASC (default): Ascending order.
+DESC: Descending order.
+Aggregation (Functions):
+
+Perform calculations on groups of data.
+Common functions:
+AVG(expr): Average value.
+COUNT(expr): Count of rows (or non-null values).
+MAX(expr): Maximum value.
+MIN(expr): Minimum value.
+SUM(expr): Sum of values.
+Used with GROUP BY clause to group data before applying functions.
+Joining Tables:
+
+Combines data from multiple tables.
+Types of joins:
+INNER JOIN: Returns rows where there's a match in both tables based on the join condition.
+LEFT JOIN: Includes all rows from the left table and matching rows from the right table.
+RIGHT JOIN: Includes all rows from the right table and matching rows from the left table.
+FULL JOIN: Includes all rows from both tables.
+
+
 1. Basic search using LIKE
 SELECT * FROM Test
 WHERE UserId = 'Email'
